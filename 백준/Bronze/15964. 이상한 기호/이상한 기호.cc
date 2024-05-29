@@ -2,16 +2,16 @@
 
 using namespace std;
 
-void calculate(int A, int B)
+void calculate(long long A, long long B)
 {
-    int result = (A + B) * (A - B);
+    long long result = (A + B) * (A - B);
 
     cout << result << endl;
 }
 
 int main()
 {
-    int A, B;
+    long long A, B;
 
     cin >> A >> B;
 
