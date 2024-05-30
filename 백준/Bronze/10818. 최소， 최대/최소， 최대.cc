@@ -5,30 +5,26 @@ using namespace std;
 int main()
 {
     int N;
+    int number;
     int min = 1000000;
-    int max = -1000000;
+    int max = -10000000;
 
     cin >> N;
 
-    int *arr = new int[N];
-
     for (int i = 0; i < N; i++)
     {
-        cin >> arr[i];
+        cin >> number;
 
-        if (arr[i] > max)
+        if (number > max)
         {
-            max = arr[i];
+            max = number;
         }
-        
-        if (arr[i] < min)
+
+        if (number < min)
         {
-            min = arr[i];
+            min = number;
         }
     }
 
     cout << min << " " << max << endl;
-
-
-    return 0;
 }
