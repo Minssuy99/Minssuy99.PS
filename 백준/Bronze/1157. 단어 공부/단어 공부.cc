@@ -24,7 +24,6 @@ int main()
             Alphabet[s[i] - 'A']++;
     }
 
-    // 가장 많이 사용한 알파벳 찾기
     for (int i = 0; i < Alphabet_size; i++)
     {
         if (Alphabet[i] > rank)
