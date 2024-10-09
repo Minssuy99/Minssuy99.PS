@@ -1,6 +1,6 @@
 #include <iostream>
 #include <stack>
-#include <vector>
+
 
 using namespace std;
 
@@ -10,7 +10,8 @@ int main()
     cin.tie(0);
 
     int seq[1000001];
-    vector<string> s;
+    string result;
+
     stack<int> st;
 
     int n;
@@ -28,26 +29,23 @@ int main()
     for(int i = 1; i <= n; i++)
     {
         st.push(i);
-        s.push_back("+");
+        result += "+\n";
 
         while(!st.empty() && seq[index] == st.top())
         {
             st.pop();
-            s.push_back("-");
+            result += "-\n";
             index++;
         }
     }
 
     if(st.empty())
     {
-        for(int i = 0; i < s.size(); i++)
-        {
-            cout << s[i]<< '\n';
-        }
+        cout << result;
     }
     else
     {
-        cout << "NO" << '\n';
+        cout << "NO\n";
     }
 
 }
