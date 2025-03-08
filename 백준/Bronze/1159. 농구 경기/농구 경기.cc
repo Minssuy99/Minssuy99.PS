@@ -7,13 +7,13 @@ int main()
     ios::sync_with_stdio(0);
     cin.tie(0);
 
+    int arr[26];
     int n;
+    bool check = true;
 
-    int arr[26] = {0};
+    memset(arr, 0, sizeof(arr));
 
     cin >> n;
-
-    bool check = false;
 
     for (int i = 0; i < n; i++)
     {
@@ -21,24 +21,20 @@ int main()
 
         cin >> s;
 
-        int temp = s[0] - 97;
-
-        arr[temp]++;
+        arr[s[0] - 97]++;
     }
 
     for (int i = 0; i < 26; i++)
     {
         if (arr[i] >= 5)
         {
-            check = true;
-            cout << char(i + 'a');
+            check = false;
+            cout << char(i + 97);
         }
     }
 
-    if (check == false)
-    {
+    if (check)
         cout << "PREDAJA";
-    }
 
     return 0;
 }
