@@ -1,100 +1,67 @@
 #include <bits/stdc++.h>
-#define endl '\n'
-
-typedef long long ll;
 
 using namespace std;
 
-string s;
+bool isVowel(char c)
+{
+    return string("aeiou").find(c) != string::npos;
+}
+
+bool hasVowel(const string &s) // 모음 체크
+{
+    for (char c : s)
+        if (isVowel(c))
+            return true;
+    return false;
+}
+
+bool noThreeInARow(const string &s) // 자모 연속 3개
+{
+    int vowelCount = 0, consonantCount = 0;
+    for (char c : s)
+    {
+        if (isVowel(c))
+        {
+            vowelCount++;
+            consonantCount = 0;
+        }
+        else
+        {
+            consonantCount++;
+            vowelCount = 0;
+        }
+        if (vowelCount == 3 || consonantCount == 3)
+            return false;
+    }
+    return true;
+}
+
+bool noInvalidDouble(const string &s) // 연속 2개
+{
+    for (int i = 1; i < s.size(); i++)
+    {
+        if (s[i] == s[i - 1] && s[i] != 'e' && s[i] != 'o')
+            return false;
+    }
+    return true;
+}
 
 int main()
 {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
-    while (true)
+    string s;
+    while (cin >> s && s != "end")
     {
-        bool isAcceptable = false;
-        cin >> s;
-
-        if (s == "end")
-            break;
-
-        // 1차 검사 ---------------------------
-        for (int i = 0; i < s.size(); i++)
+        if (hasVowel(s) && noThreeInARow(s) && noInvalidDouble(s))
         {
-            if (s[i] == 'a' || s[i] == 'e' || s[i] == 'i' || s[i] == 'o' || s[i] == 'u')
-            {
-                isAcceptable = true;
-            }
-        }
-        if (isAcceptable == false)
-        {
-            cout << "<" << s << "> " << "is not acceptable." << endl;
-            continue;
-        }
-
-        // 2차 검사 ---------------------------
-        int vowelCount = 0;
-        int consonantCount = 0;
-
-        for (int i = 0; i < s.size(); i++)
-        {
-            char ch = s[i];
-            if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u')
-            {
-                vowelCount++;
-                consonantCount = 0;
-            }
-            else
-            {
-                consonantCount++;
-                vowelCount = 0;
-            }
-
-            if (vowelCount == 3 || consonantCount == 3)
-            {
-                isAcceptable = false;
-                break;
-            }
-        }
-        if (isAcceptable == false)
-        {
-            cout << "<" << s << "> " << "is not acceptable." << endl;
-            continue;
-        }
-
-        // 3차 검사 ---------------------------
-        int sub_stack = 0;
-        char c = ' ';
-        for (int i = 0; i < s.size(); i++)
-        {
-            if (c != s[i])
-            {
-                c = s[i];
-            }
-            else
-            {
-                if (s[i] == 'e' || s[i] == 'o')
-                    continue;
-                else
-                {
-                    isAcceptable = false;
-                    break;
-                }
-            }
-        }
-
-        if (isAcceptable == false)
-        {
-            cout << "<" << s << "> " << "is not acceptable." << endl;
-            continue;
+            cout << "<" << s << "> is acceptable.\n";
         }
         else
         {
-            cout << "<" << s << "> " << "is acceptable." << endl;
+            cout << "<" << s << "> is not acceptable.\n";
         }
     }
-
     return 0;
 }
