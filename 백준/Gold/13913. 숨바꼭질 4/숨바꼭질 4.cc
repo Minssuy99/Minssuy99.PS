@@ -1,54 +1,60 @@
 #include <bits/stdc++.h>
+#define endl '\n'
 using namespace std;
 
 const int MAX = 100001;
 
-int main()
+int n, k;
+int dist[MAX];
+int prev_pos[MAX];
+
+void BFS(int start)
 {
-    int n, k;
-    cin >> n >> k;
-
-    vector<int> dist(MAX, -1);
-    vector<int> from(MAX, -1);
     queue<int> q;
-
-    dist[n] = 0;
-    q.push(n);
+    q.push(start);
+    dist[start] = 0;
 
     while (!q.empty())
     {
         int cur = q.front();
         q.pop();
 
-        if (cur == k)
-            break;
-
         for (int next : {cur - 1, cur + 1, cur * 2})
         {
             if (next < 0 || next >= MAX)
                 continue;
-            if (dist[next] != -1)
-                continue;
 
-            dist[next] = dist[cur] + 1;
-            from[next] = cur;
-            q.push(next);
+            if (dist[next] == -1)
+            {
+                dist[next] = dist[cur] + 1;
+                prev_pos[next] = cur;
+                q.push(next);
+            }
         }
     }
+}
 
-    cout << dist[k] << '\n';
+int main()
+{
+    ios::sync_with_stdio(0);
+    cin.tie(0);
 
-    stack<int> path;
-    for (int i = k; i != -1; i = from[i])
-    {
-        path.push(i);
-    }
+    cin >> n >> k;
 
-    while (!path.empty())
-    {
-        cout << path.top() << ' ';
-        path.pop();
-    }
+    fill(dist, dist + MAX, -1);
+    BFS(n);
+
+    cout << dist[k] << endl;
+
+    vector<int> path;
+    for (int cur = k; cur != n; cur = prev_pos[cur])
+        path.push_back(cur);
+    path.push_back(n);
+
+    reverse(path.begin(), path.end());
+    for (int p : path)
+        cout << p << ' ';
+    cout << endl;
 
     return 0;
 }
