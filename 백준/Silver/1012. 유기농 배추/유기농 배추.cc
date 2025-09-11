@@ -1,24 +1,22 @@
 #include <bits/stdc++.h>
+#define endl '\n'
 
 using namespace std;
 
-int T, m, n, k, ret;
-
-bool farm[51][51];
-bool visited[51][51];
+int T, M, N, K, ret;
+bool arr[51][51], visited[51][51];
 
 int dy[] = {-1, 0, 1, 0};
 int dx[] = {0, 1, 0, -1};
 
 void bfs(int y, int x)
 {
-    queue<pair<int, int>> q;
-
     visited[y][x] = 1;
 
+    queue<pair<int, int>> q;
     q.push({y, x});
 
-    while (q.size())
+    while (!q.empty())
     {
         auto cur = q.front();
         q.pop();
@@ -28,10 +26,9 @@ void bfs(int y, int x)
             int ny = cur.first + dy[i];
             int nx = cur.second + dx[i];
 
-            if (ny < 0 || nx < 0 || ny >= n || nx >= m || farm[ny][nx] == 0)
+            if (ny < 0 || nx < 0 || ny >= N || nx >= M)
                 continue;
-
-            if (visited[ny][nx])
+            if (arr[ny][nx] == 0 || visited[ny][nx] == 1)
                 continue;
 
             visited[ny][nx] = 1;
@@ -49,33 +46,32 @@ int main()
 
     while (T--)
     {
-        memset(farm, 0, sizeof(farm));
+        memset(arr, 0, sizeof(arr));
         memset(visited, 0, sizeof(visited));
         ret = 0;
 
-        cin >> m >> n >> k;
+        cin >> M >> N >> K;
 
-        for (int i = 0; i < k; i++)
+        for (int i = 0; i < K; i++)
         {
-            int cabbage_x, cabbage_y;
-            cin >> cabbage_x >> cabbage_y;
+            int x, y;
+            cin >> x >> y;
 
-            farm[cabbage_y][cabbage_x] = 1;
+            arr[y][x] = 1;
         }
 
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < N; i++)
         {
-            for (int j = 0; j < m; j++)
+            for (int j = 0; j < M; j++)
             {
-                if (farm[i][j] == 1 && visited[i][j] == 0)
+                if (arr[i][j] == 1 && visited[i][j] == 0)
                 {
                     bfs(i, j);
                     ret++;
                 }
             }
         }
-
-        cout << ret << '\n';
+        cout << ret << endl;
     }
 
     return 0;
